@@ -32,11 +32,11 @@ const todo = (state = initialState, action) => {
       // let newStudent3 = {...student};
 
       return [{ ...action.payload }, ...state];
-    case "REMOVE_TODO":
+    case "REMOVE_TODO_SUCCEEDED":
       // action = { type:'REMOVE_TODO', payload:1 }
       // 배열에서 요소삭제 -> 배열크기가 변동됨 == 특정 조건에 맞지않는 요소만 리턴됨 == filter
       return state.filter((todo) => todo.id !== action.payload);
-    case "SAVE_TODO":
+    case "MODIFY_TODO_SUCCEEDED":
       // 배열에서 요소변경 -> 배열크기는 변동 안 됨 == 특정 조건에 맞는 요소만 내용 변경 == map
       // action = { type:'SAVE_TODO', payload: {id:1, memo:"Redux 공부하기"} }
       return state.map((todo) =>
