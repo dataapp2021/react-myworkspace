@@ -33,7 +33,7 @@ const todo = (state = initialState, action) => {
   // design pattern 중에서 command pattern을 응용
   switch (action.type) {
     // action = {type: 'ADD_TODO', payload: {id:3, memo:'redux 공부'}}
-    case "ADD_TODO":
+    case "ADD_TODO_SUCCEEDED":
       // action.type에 따라서 state 변경하여 return
       // return 변동된state;
 

@@ -8,10 +8,6 @@ import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import { green, purple } from "@material-ui/core/colors";
 
 import { ThemeProvider } from "@material-ui/styles";
-
-import { createStore } from "redux";
-import { Provider } from "react-redux";
-
 // Core Components
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -36,17 +32,31 @@ import {
 
 import Home from "./components/home/Home";
 
+import { createStore, applyMiddleware } from "redux"; // saga middleware를 redux store에 적용하는데 씀
+import { Provider } from "react-redux";
+import createSagaMiddleware from "redux-saga"; // saga middleware를 생성하는데 씀
+
 // ./redux :
 // redux.js , ./redux/index.js
-import rootReducer from "./redux";
+import rootReducer from "./redux/reducers"; // 루트 리듀서
+import rootSaga from "./redux/sagas"; // 루트 사가
+
+// saga middleware 생성
+const sagaMiddleWare = createSagaMiddleware();
 
 // rootReduer로 redux store 생성
-const store = createStore(rootReducer);
+// sagaMiddleware 적용
+const store = createStore(rootReducer, applyMiddleware(sagaMiddleWare));
+
+// 루트 saga로 saga middleware 실행
+// saga에서 중간에 캐치할 action들에 대해서 응답대기
+// 반복문이 돌고 있음 -> event-loop
+sagaMiddleWare.run(rootSaga);
 
 // 라우터에 로딩되는 컴포넌트는 컨테이너 컴포넌트
 const Todo = lazy(() => import("./components/todo-redux/Todo"));
 const TodoDetail = lazy(() => import("./components/todo-redux/TodoDetail"));
-const Contact = lazy(() => import("./components/Contact"));
+const Contact = lazy(() => import("./components/contact-redux/Contact"));
 
 const drawerWidth = "240px";
 
@@ -199,7 +209,7 @@ function App() {
                   <Route path="/todo" component={Todo} exact></Route>
                   {/* :매개변수명 -> 컴포넌트에서 변수처럼 받을 수 있음 */}
                   <Route path="/todo/:id" component={TodoDetail}></Route>
-                  <Route path="/contacts" component={Contact}></Route>
+                  <Route path="/contacts" component={Contact} exact></Route>
                 </Switch>
               </Suspense>
             </main>
