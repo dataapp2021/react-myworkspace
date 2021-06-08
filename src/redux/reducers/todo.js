@@ -6,24 +6,7 @@
 
 /* reducer는 이전 state와 action 객체를 받아서(이용해서) state를 변경 */
 
-const initialState = [
-  {
-    id: 1,
-    memo: "React 공부하기",
-    comments: [
-      { id: 1, content: "커멘트입니다1." },
-      { id: 2, content: "커멘트입니다2." },
-    ],
-  },
-  {
-    id: 2,
-    memo: "Javascript 연습하기",
-    comments: [
-      { id: 3, content: "커멘트입니다3." },
-      { id: 4, content: "커멘트입니다4." },
-    ],
-  },
-];
+const initialState = [];
 
 // 초기상태가 없으면 initialState를 적용
 // initialState는 state의 기본 뼈대를 만들 때 사용 또는 테스트 데이터용
@@ -59,6 +42,9 @@ const todo = (state = initialState, action) => {
       return state.map((todo) =>
         todo.id === action.payload.id ? { ...action.payload } : todo
       );
+    case "FETCH_TODOLIST_SUCCEEDED":
+      // 서버에서 받아온 데이터로 state를 변경
+      return [...action.payload];
     // default 케이스는 기존 상태를 반환
     default:
       return state;

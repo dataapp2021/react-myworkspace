@@ -17,6 +17,7 @@ const todoApi = {
   // ...
 
   add: (data) => axios.post(`${process.env.REACT_APP_API_BASE}/todos`, data),
+  fetch: () => axios.get(`${process.env.REACT_APP_API_BASE}/todos`),
 };
 
 export default todoApi;
