@@ -2,7 +2,7 @@
 // 다른 saga들을 합쳐주는 역할
 
 import { fork } from "@redux-saga/core/effects";
-import todoSaga from "./todo";
+import todoSaga from "./todo-paging";
 // import contactSaga from "./contact";
 
 export default function* rootSaga() {
