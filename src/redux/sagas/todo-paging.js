@@ -22,12 +22,18 @@ function* addTodo(action) {
     // api.add(action.payload).then(result => result);
     const result = yield call(api.add, action.payload);
     console.log(result);
-    // const id = new Date().getTime();
-    // 2. API호출이 완료되면 state를 변경함
-    // put: reducer에 state를 변경하는(dispatch) 이펙트
+
+    // 2. 서버에서 추가된 데이터를 포함하여 다시 받아옴.
+    // 데이터를 추가하면 0번째 페이지의 데이터 구조가 변경됨.
+    // redux state에 size 가져오기
+    const { size } = yield select((state) => state.todo);
+    const resultFetched = yield call(api.fetchPaging, 0, size);
+    console.log(resultFetched);
+
+    // 3. 받아온 데이터로 state 변경
     yield put({
-      type: "ADD_TODO_SUCCEEDED",
-      payload: { id: result.data.id, ...action.payload },
+      type: "FETCH_TODOLIST_PAGING_SUCCEEDED",
+      payload: resultFetched.data,
     });
   } catch (e) {
     // Error
@@ -79,10 +85,18 @@ function* removeTodo(action) {
     // id: 데이터베이스의 PK, JPA 엔티티의 @Id
     const result = yield call(api.remove, action.payload);
     console.log(result);
-    // 2. API호출이 완료되면 state를 변경함
+
+    // 2. 서버에서 삭제된 데이터가 반영된 목록을 다시 받아옴.
+    // 현재페이지의 데이터를 다시 가져옴
+    // redux state에 size 가져오기
+    const { page, size } = yield select((state) => state.todo);
+    const resultFetched = yield call(api.fetchPaging, page, size);
+    console.log(resultFetched);
+
+    // 3. 받아온 데이터로 state 변경
     yield put({
-      type: "REMOVE_TODO_SUCCEEDED",
-      payload: action.payload,
+      type: "FETCH_TODOLIST_PAGING_SUCCEEDED",
+      payload: resultFetched.data,
     });
   } catch (e) {
     alert(e.message);
