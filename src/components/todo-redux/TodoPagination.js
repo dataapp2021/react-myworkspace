@@ -1,9 +1,7 @@
 import TablePagination from "@material-ui/core/TablePagination";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-const TodoPagination = () => {
-  // redux state 가져오기, 변경에 대한 대기, 변경되면 컴포넌트 업데이트
-  const { totalElements, page, size } = useSelector((state) => state.todo);
+const TodoPagination = ({ totalElements, page, size }) => {
   const dispatch = useDispatch();
 
   // 페이지 번호 바뀔 때 호출 되는 함수
