@@ -1,35 +1,5 @@
 const linedata = [
   {
-    dataTime: "22:00",
-    pm10: 55,
-    pm25: 34,
-  },
-  {
-    dataTime: "23:00",
-    pm10: 54,
-    pm25: 33,
-  },
-  {
-    dataTime: "24:00",
-    pm10: 53,
-    pm25: 32,
-  },
-  {
-    dataTime: "01:00",
-    pm10: 53,
-    pm25: 34,
-  },
-  {
-    dataTime: "02:00",
-    pm10: 55,
-    pm25: 33,
-  },
-  {
-    dataTime: "03:00",
-    pm10: 54,
-    pm25: 33,
-  },
-  {
     dataTime: "04:00",
     pm10: 55,
     pm25: 34,
@@ -58,6 +28,36 @@ const linedata = [
     dataTime: "09:00",
     pm10: 51,
     pm25: 32,
+  },
+  {
+    dataTime: "10:00",
+    pm10: 52,
+    pm25: 31,
+  },
+  {
+    dataTime: "11:00",
+    pm10: 53,
+    pm25: 32,
+  },
+  {
+    dataTime: "12:00",
+    pm10: 53,
+    pm25: 32,
+  },
+  {
+    dataTime: "13:00",
+    pm10: 52,
+    pm25: 32,
+  },
+  {
+    dataTime: "14:00",
+    pm10: 48,
+    pm25: 28,
+  },
+  {
+    dataTime: "15:00",
+    pm10: 47,
+    pm25: 27,
   },
 ];
 
