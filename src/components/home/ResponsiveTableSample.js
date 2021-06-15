@@ -36,21 +36,23 @@ const ResponsiveTable = ({ data }) => {
 
   return (
     // <Table >
+
     <Table style={{ borderCollapse: "collapse" }}>
       <Thead>
         <Tr>
-          {Object.keys(data[0]).map((key) => (
-            <Th
-              style={{
-                borderBottom: "1px solid rgba(224, 224, 224)",
-                lineHeight: "2rem",
-                fontWeight: "bold",
-              }}
-              key={`th-${key}`}
-            >
-              {key}
-            </Th>
-          ))}
+          {data.length > 0 &&
+            Object.keys(data[0]).map((key) => (
+              <Th
+                style={{
+                  borderBottom: "1px solid rgba(224, 224, 224)",
+                  lineHeight: "2rem",
+                  fontWeight: "bold",
+                }}
+                key={`th-${key}`}
+              >
+                {key}
+              </Th>
+            ))}
         </Tr>
       </Thead>
       <Tbody>
