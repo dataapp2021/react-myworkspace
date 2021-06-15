@@ -16,6 +16,8 @@ import linedata from "./data/linedata";
 import tabledata from "./data/tabledata";
 import { useEffect, useState } from "react";
 
+import api from "../../api/opendata";
+
 const useStyles = makeStyles((theme) => ({
   // 내부 페이퍼에 스타일을 지정
   paper: {
@@ -33,15 +35,57 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const transformSidoData = (source) => {
-  return bardata;
+  if (source.length === 0) return [];
+
+  // 가장 최근 데이터 (PM10, PM2.5)
+  const sourceData = source.slice(0, 2);
+
+  const transData = [];
+  for (let name in sidoKorName) {
+    const item = {
+      sido: sidoKorName[name],
+      pm10: parseInt(sourceData[0][name]),
+      pm25: parseInt(sourceData[1][name]),
+    };
+    transData.push(item);
+  }
+
+  return transData;
 };
 
 const transformLocationData = (source, sido) => {
-  return linedata;
+  if (source.length === 0) return [];
+
+  const transData = [];
+  let item = {};
+  // for-in 문 동일한데, index를 사용하고 싶을 때 쓴다
+  source.forEach((record, index) => {
+    if (index % 2 === 0) {
+      // PM10
+      item.dataTime = record.dataTime.substr(11, 5);
+      item.pm10 = parseInt(record[sido]);
+    } else {
+      // PM2.5
+      item.pm25 = parseInt(record[sido]);
+      transData.unshift(item);
+      item = {};
+    }
+  });
+
+  return transData;
 };
 
 const transformSidoTableData = (source) => {
-  return tabledata;
+  if (source.length === 0) return [];
+  return source.map((item) => {
+    let newItem = { 시간: item.dataTime.substr(5, 11), 구분: item.itemCode };
+    for (let name in sidoKorName) {
+      let val = item[name];
+      newItem[sidoKorName[name]] = parseInt(val);
+    }
+
+    return newItem; // map함수 안에서 반환되는 객체
+  });
 };
 
 const Home = () => {
@@ -50,8 +94,27 @@ const Home = () => {
   const [sido, setSido] = useState("seoul");
   const [source, setSource] = useState([]);
 
+  // 백엔드에서 받아온 데이터를 세팅함
+
+  // useEffect(()=>{}, [])
+  // [변수명] -> 변수의 값이 바뀔 때 마다 함수가 호출됨
+  // [] -> 컴포넌트가 처음 마운트될 때만 호출됨
   useEffect(() => {
-    setSource(sourceSample);
+    // async-await, ES8, ES2017
+    const getData = async () => {
+      // await 키워드: promise 처리가 완료될 때까지 대기
+      // async 함수 안에서만 쓸 수가 있음.
+      // -> 네트워크 호출이 끝날때까지 대기하고 결과값을 반환함
+      const result = await api.fetchDustHourly();
+      setSource(result.data);
+    };
+
+    getData();
+
+    // Promise chain, ES6, ES2015
+    // api.fetchDustHourly().then(result => {
+    //   setSource(result.data);
+    // });
   }, []);
 
   return (
