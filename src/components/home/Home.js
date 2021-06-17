@@ -9,11 +9,11 @@ import BarChartSample from "./BarChartSample";
 import LineChartSample from "./LineChartSample";
 import ResponsiveTable from "./ResponsiveTableSample";
 
-import sourceSample from "./data/source";
+// import sourceSample from "./data/source";
 import sidoKorName from "./data/sidoKorName";
-import bardata from "./data/bardata";
-import linedata from "./data/linedata";
-import tabledata from "./data/tabledata";
+// import bardata from "./data/bardata";
+// import linedata from "./data/linedata";
+// import tabledata from "./data/tabledata";
 import { useEffect, useState } from "react";
 
 import api from "../../api/opendata";
