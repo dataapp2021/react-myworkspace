@@ -67,7 +67,7 @@ const TodoDetail = () => {
               </Button>
             </Box>
           </Paper>
-          {todo.comments && (
+          {todo.comments.length > 0 && (
             <Paper style={{ marginTop: "2rem" }} className={classes.paper}>
               <List>
                 {todo.comments.map((comment, index) => (
