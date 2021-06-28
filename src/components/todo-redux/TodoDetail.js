@@ -33,7 +33,7 @@ const TodoDetail = () => {
   // console.log(id);
   // URL 매개변수는 문자열로 들어옴 숫자값 비교면 변환 후 비교
   const todo = useSelector(
-    (state) => state.todo.filter((todo) => todo.id === parseInt(id))[0]
+    (state) => state.todo.content.filter((todo) => todo.id === parseInt(id))[0]
   );
   // console.log(todo);
 
